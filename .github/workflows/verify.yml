@@ -1,0 +1,16 @@
+name: Build and test
+on:
+  push:
+    branches: [main]
+  pull_request:
+permissions:
+  contents: read
+jobs:
+  verify:
+    runs-on: macos-15
+    steps:
+      - uses: actions/checkout@v4
+      - name: Test core behavior
+        run: swift test
+      - name: Build application
+        run: xcodebuild -project "Mac Screen Recorder.xcodeproj" -scheme "Mac Screen Recorder" -destination 'generic/platform=macOS' CODE_SIGNING_ALLOWED=NO build
